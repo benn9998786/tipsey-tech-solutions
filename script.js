@@ -79,7 +79,7 @@ filterBtns.forEach((btn) => {
 // different Render hostname.
 const QUOTE_API = "https://tipsey-quotes.onrender.com";
 // Shown to the visitor if the submission cannot reach the API.
-const FALLBACK_EMAIL = "hello@tipseytech.com";
+const FALLBACK_EMAIL = "fromthesky@gmail.com";
 const form = document.getElementById("contactForm");
 const status = document.getElementById("formStatus");
 
@@ -135,12 +135,37 @@ if (form) {
       status.classList.add("ok");
       form.reset();
     } catch (err) {
-      status.textContent =
-        "Sorry — that didn't send. Please email us directly at " +
-        FALLBACK_EMAIL +
-        " and we'll pick it up straight away.";
-      status.classList.add("err");
       console.error("Quote submission failed:", err);
+
+      // The API could not be reached. Rather than lose the enquiry, hand the
+      // visitor a pre-filled email so everything they typed still gets through.
+      const subject = "Website quote request from " + name;
+      const body =
+        "Name: " + name +
+        "\nEmail: " + email +
+        (form.budget && form.budget.value ? "\nBudget: " + form.budget.value : "") +
+        "\n\nProject details:\n" + message +
+        "\n\n(Sent from the website contact form)";
+
+      status.textContent = "";
+      const note = document.createElement("span");
+      note.textContent = "We couldn't send that automatically. ";
+      const link = document.createElement("a");
+      link.href =
+        "mailto:" + FALLBACK_EMAIL +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body);
+      link.textContent = "Click here to send it by email";
+      link.style.color = "inherit";
+      link.style.textDecoration = "underline";
+      status.appendChild(note);
+      status.appendChild(link);
+      status.append(
+        document.createTextNode(
+          " — your message is already filled in, just hit send."
+        )
+      );
+      status.classList.add("err");
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;
