@@ -7,9 +7,12 @@ POSTER = SITE + "/assets/promo-poster.jpg"
 BIZ = {
     "name": "Tipsey Tech Solutions",
     "telephone": "+44 7030 955722",
-    "email": "hello@tipseytech.com",
-    "street": "London",
-    "region": "England",
+    "email": "lolfromthesky@gmail.com",
+    # No physical premises - the business is fully remote, so a PostalAddress
+    # would be fabricated. Locality/region are left off and areaServed is used
+    # instead, which is the honest representation.
+    "street": "",
+    "region": "",
     "country": "GB",
     "founded": "2019",
     "priceRange": "\u00a3\u00a3",
@@ -91,16 +94,8 @@ def build_jsonld(page):
         "email": BIZ["email"],
         "foundingDate": BIZ["founded"],
         "priceRange": BIZ["priceRange"],
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": BIZ["street"],
-            "addressLocality": BIZ["street"],
-            "addressRegion": BIZ["region"],
-            "addressCountry": BIZ["country"],
-        },
         "areaServed": [
             {"@type": "Country", "name": "United Kingdom"},
-            {"@type": "Place", "name": "Europe"},
         ],
         "knowsAbout": ["Web design", "eCommerce", "Search engine optimisation",
                        "Website maintenance", "Conversion rate optimisation", "Mobile web development"],

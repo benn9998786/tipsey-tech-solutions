@@ -79,7 +79,7 @@ filterBtns.forEach((btn) => {
 // different Render hostname.
 const QUOTE_API = "https://tipsey-quotes.onrender.com";
 // Shown to the visitor if the submission cannot reach the API.
-const FALLBACK_EMAIL = "fromthesky@gmail.com";
+const FALLBACK_EMAIL = "lolfromthesky@gmail.com";
 const form = document.getElementById("contactForm");
 const status = document.getElementById("formStatus");
 
