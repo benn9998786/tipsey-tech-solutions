@@ -205,7 +205,7 @@ const runCount = (el) => {
     const p = Math.min((now - start) / dur, 1);
     const eased = 1 - Math.pow(1 - p, 3);
     let val = (target * eased).toFixed(decimals);
-    if (grouped) val = Number(val).toLocaleString("en-GB");
+    if (grouped) val = Number(val).toLocaleString("en-IN");
     el.textContent = prefix + val + suffix;
     if (p < 1) requestAnimationFrame(tick);
     else el.textContent = raw;

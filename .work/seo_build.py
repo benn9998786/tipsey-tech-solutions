@@ -13,9 +13,9 @@ BIZ = {
     # instead, which is the honest representation.
     "street": "",
     "region": "",
-    "country": "GB",
+    "country": "IN",
     "founded": "2019",
-    "priceRange": "\u00a3\u00a3",
+    "priceRange": "\u20b9\u20b9",
 }
 
 PAGES = {
@@ -26,7 +26,7 @@ PAGES = {
     },
     "services.html": {
         "title": "Web Design, eCommerce & SEO Services | Tipsey Tech Solutions",
-        "desc": "Custom website design, online stores, SEO and care plans for small businesses. Fixed prices from \u00a31,490, no hourly surprises. See what every Tipsey website includes.",
+        "desc": "Custom website design, online stores, SEO and care plans for small businesses. Fixed prices from \u20b925,000, no hourly surprises. See what every Tipsey website includes.",
         "crumb": "Services",
     },
     "work.html": {
@@ -58,8 +58,8 @@ SERVICES = [
 FAQS = {
     "index.html": [
         ("How long does a website take?", "Most brochure sites launch in 2-3 weeks from kickoff. eCommerce builds typically take 4-6 weeks depending on catalogue size."),
-        ("How much does a website cost?", "Fixed-price packages start at \u00a31,490. Growth packages are \u00a33,490 and eCommerce builds start at \u00a36,900."),
-        ("Do you offer care plans after launch?", "Yes. Care plans from \u00a349 per month include hosting, updates, daily backups, security monitoring and content changes."),
+        ("How much does a website cost?", "Fixed-price packages start at \u20b925,000. Growth packages are \u20b959,000 and eCommerce builds start at \u20b91,10,000."),
+        ("Do you offer care plans after launch?", "Yes. Care plans from \u20b9999 per month include hosting, updates, daily backups, security monitoring and content changes."),
     ],
     "services.html": [
         ("How long does a website take?", "Most brochure sites launch in 2-3 weeks from kickoff. eCommerce builds typically take 4-6 weeks."),
@@ -95,7 +95,7 @@ def build_jsonld(page):
         "foundingDate": BIZ["founded"],
         "priceRange": BIZ["priceRange"],
         "areaServed": [
-            {"@type": "Country", "name": "United Kingdom"},
+            {"@type": "Country", "name": "India"},
         ],
         "knowsAbout": ["Web design", "eCommerce", "Search engine optimisation",
                        "Website maintenance", "Conversion rate optimisation", "Mobile web development"],
@@ -110,14 +110,14 @@ def build_jsonld(page):
     website = {
         "@type": "WebSite", "@id": SITE + "/#website",
         "url": SITE + "/", "name": BIZ["name"],
-        "publisher": {"@id": SITE + "/#business"}, "inLanguage": "en-GB",
+        "publisher": {"@id": SITE + "/#business"}, "inLanguage": "en-IN",
     }
     wp = {
         "@type": "WebPage", "@id": url + "#webpage", "url": url,
         "name": PAGES[page]["title"], "description": PAGES[page]["desc"],
         "isPartOf": {"@id": SITE + "/#website"},
         "about": {"@id": SITE + "/#business"},
-        "inLanguage": "en-GB",
+        "inLanguage": "en-IN",
     }
     g = {"@context": "https://schema.org", "@graph": [org, website, wp]}
     if page in FAQS:
@@ -142,7 +142,7 @@ def head_block(page):
 '  <link rel="canonical" href="' + url + '" />\n\n'
 '  <meta property="og:type" content="website" />\n'
 '  <meta property="og:site_name" content="Tipsey Tech Solutions" />\n'
-'  <meta property="og:locale" content="en_GB" />\n'
+'  <meta property="og:locale" content="en_IN" />\n'
 '  <meta property="og:url" content="' + url + '" />\n'
 '  <meta property="og:title" content="' + title + '" />\n'
 '  <meta property="og:description" content="' + desc + '" />\n'

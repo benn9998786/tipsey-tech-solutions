@@ -164,7 +164,7 @@ app.get("/admin", requireAdmin, async (req, res) => {
   const rows = quotes
     .map(
       (q) => `<tr>
-      <td>${esc(new Date(q.createdAt).toLocaleString("en-GB"))}</td>
+      <td>${esc(new Date(q.createdAt).toLocaleString("en-IN"))}</td>
       <td><strong>${esc(q.name)}</strong></td>
       <td><a href="mailto:${esc(q.email)}">${esc(q.email)}</a></td>
       <td>${q.phone ? `<a href="tel:${esc(q.phone)}">${esc(q.phone)}</a>` : "&mdash;"}</td>
@@ -176,7 +176,7 @@ app.get("/admin", requireAdmin, async (req, res) => {
     .join("\n");
 
   res.type("html").send(`<!doctype html>
-<html lang="en-GB"><head><meta charset="utf-8">
+<html lang="en-IN"><head><meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
 <title>Quote requests - Tipsey Tech</title>
 <style>
