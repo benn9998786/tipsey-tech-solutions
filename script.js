@@ -213,7 +213,9 @@ const runCount = (el) => {
   if (!match) return;
   const [, prefix, numStr, suffix] = match;
   const target = parseFloat(numStr.replace(/,/g, ""));
-  if (!isFinite(target) || target === 0) return;
+  // Only worth animating if there is somewhere to count to. Small figures
+  // ("5 packages") just flicker for a frame and look like a glitch.
+  if (!isFinite(target) || target < 10) return;
   const decimals = (numStr.split(".")[1] || "").length;
   const grouped = numStr.includes(",");
   const start = performance.now();
