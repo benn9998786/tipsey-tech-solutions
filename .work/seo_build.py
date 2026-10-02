@@ -6,7 +6,7 @@ POSTER = SITE + "/assets/promo-poster.jpg"
 
 BIZ = {
     "name": "Tipsey Tech Solutions",
-    "telephone": "+44 20 7946 0100",
+    "telephone": "+44 7030 955722",
     "email": "hello@tipseytech.com",
     "street": "London",
     "region": "England",
