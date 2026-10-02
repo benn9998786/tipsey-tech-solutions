@@ -6,7 +6,7 @@ POSTER = SITE + "/assets/promo-poster.jpg"
 
 BIZ = {
     "name": "Tipsey Tech Solutions",
-    "telephone": "+44 7030 955722",
+    "telephone": "+91 70309 55722",
     "email": "lolfromthesky@gmail.com",
     # No physical premises - the business is fully remote, so a PostalAddress
     # would be fabricated. Locality/region are left off and areaServed is used
