@@ -75,10 +75,12 @@ filterBtns.forEach((btn) => {
 });
 
 // --- Contact form ---
-// Where enquiries are POSTed. Change this if the API is deployed on a
-// different Render hostname.
-const QUOTE_API = "https://tipsey-quotes.onrender.com";
-// Shown to the visitor if the submission cannot reach the API.
+// Enquiries are delivered straight to this inbox by FormSubmit, which needs no
+// backend and no account. If it cannot be reached we hand the visitor a
+// pre-filled email instead, so an enquiry is never silently lost.
+const FORM_ENDPOINT =
+  "https://formsubmit.co/ajax/lolfromthesky@gmail.com";
+// The inbox enquiries land in, also used to build the fallback email.
 const FALLBACK_EMAIL = "lolfromthesky@gmail.com";
 const form = document.getElementById("contactForm");
 const status = document.getElementById("formStatus");
@@ -108,27 +110,29 @@ if (form) {
     status.textContent = "Sending your enquiry…";
 
     try {
-      const res = await fetch(QUOTE_API + "/api/quote", {
+      const res = await fetch(FORM_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({
           name,
           email,
           message,
           budget: form.budget ? form.budget.value : "",
+          page: location.pathname,
           // Honeypot — must stay empty for a genuine submission.
           company_website: form.company_website ? form.company_website.value : "",
-          sourcePage: location.pathname,
+          _subject: "New website quote request from " + name,
+          _template: "table",
         }),
       });
 
-      if (!res.ok) {
-        let detail = "";
-        try {
-          const body = await res.json();
-          detail = body.error || "";
-        } catch (_) {}
-        throw new Error(detail || `Request failed (${res.status})`);
+      const result = await res.json().catch(() => ({}));
+
+      if (!result.success || result.success === "false") {
+        throw new Error(result.message || `Request failed (${res.status})`);
       }
 
       status.textContent = `Thanks ${name.split(" ")[0]}! We've got your enquiry and will reply within one business day.`;
