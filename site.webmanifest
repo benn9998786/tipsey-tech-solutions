@@ -1,0 +1,14 @@
+{
+  "name": "Tipsey Tech Solutions",
+  "short_name": "Tipsey Tech",
+  "description": "Web design, eCommerce and SEO for small businesses across India.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050905",
+  "theme_color": "#050905",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "16x16 32x32 48x48", "type": "image/x-icon" },
+    { "src": "/assets/favicon.png", "sizes": "64x64", "type": "image/png" },
+    { "src": "/assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
