@@ -1108,6 +1108,27 @@ summary:focus-visible {
   filter: blur(80px);
   will-change: transform;
 }
+
+/* Mobile performance.
+   On a phone the aurora and bokeh layers are the single biggest cost on the
+   page: large blurred surfaces repaint on every animation frame, and
+   Lighthouse attributed ~1.2s of style/layout work to them. At phone widths
+   they cover a much larger share of a much smaller screen, so dropping them
+   loses very little visually and buys back a lot of main-thread time.
+   The header keeps its tint but loses the live blur, which is the most
+   expensive per-pixel effect on the page. */
+@media (max-width: 860px) {
+  .aurora { opacity: 0.32; }
+  .aurora span { filter: blur(48px); }
+  .bokeh { display: none; }
+  .site-header { backdrop-filter: none; background: rgba(5, 9, 5, 0.97); }
+  .split-media img { transform: none; }
+  .tilt { transform: none !important; }
+  .tilt.is-tilting { will-change: auto; }
+}
+@media (max-width: 480px) {
+  .aurora { display: none; }
+}
 .aurora span:nth-child(1) {
   width: 42%; aspect-ratio: 1; top: 4%; left: 4%;
   background: rgba(126, 224, 66, 0.32);
