@@ -1,0 +1,19 @@
+{
+  "name": "tipsey-quote-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Quote request backend for Tipsey Tech Solutions",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.14",
+    "pg": "^8.12.0"
+  }
+}

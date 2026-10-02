@@ -228,10 +228,16 @@
         </div>
 
         <form class="contact-form reveal" id="contactForm" novalidate>
+          <!-- Honeypot: hidden from humans, catches automated spam. -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="company_website">Company website</label>
+            <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off" />
+          </div>
           <div class="field">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" placeholder="Jane Smith" required />
           </div>
+          <newString>
           <div class="field">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="jane@company.com" required />

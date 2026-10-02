@@ -1,0 +1,42 @@
+# Render Blueprint - Tipsey Tech Solutions quote API
+#
+# The marketing site in the repo root is a separate static service. This file
+# deploys the backend that receives quote requests from it.
+#
+# Before first deploy, set these in the Render dashboard under Environment:
+#   ADMIN_PASSWORD, NOTIFY_EMAIL, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS,
+#   MAIL_FROM, ALLOWED_ORIGIN
+services:
+  - type: web
+    name: tipsey-quotes
+    runtime: node
+    rootDir: quote-api
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: ADMIN_USER
+        value: admin
+      - key: ALLOWED_ORIGIN
+        value: https://tipsey-tech-solutions.onrender.com
+      # Secrets are intentionally NOT set here. Add them as encrypted values in
+      # the dashboard so they never appear in the repository.
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: NOTIFY_EMAIL
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: DATABASE_URL
+        sync: false

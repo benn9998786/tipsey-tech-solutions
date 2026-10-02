@@ -75,11 +75,16 @@ filterBtns.forEach((btn) => {
 });
 
 // --- Contact form ---
+// Where enquiries are POSTed. Change this if the API is deployed on a
+// different Render hostname.
+const QUOTE_API = "https://tipsey-quotes.onrender.com";
+// Shown to the visitor if the submission cannot reach the API.
+const FALLBACK_EMAIL = "hello@tipseytech.com";
 const form = document.getElementById("contactForm");
 const status = document.getElementById("formStatus");
 
 if (form) {
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     status.className = "form-status";
 
@@ -94,9 +99,54 @@ if (form) {
       return;
     }
 
-    status.textContent = `Thanks ${name.split(" ")[0]}! We'll be in touch within one business day.`;
-    status.classList.add("ok");
-    form.reset();
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalLabel = submitBtn ? submitBtn.textContent : "";
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending…";
+    }
+    status.textContent = "Sending your enquiry…";
+
+    try {
+      const res = await fetch(QUOTE_API + "/api/quote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          budget: form.budget ? form.budget.value : "",
+          // Honeypot — must stay empty for a genuine submission.
+          company_website: form.company_website ? form.company_website.value : "",
+          sourcePage: location.pathname,
+        }),
+      });
+
+      if (!res.ok) {
+        let detail = "";
+        try {
+          const body = await res.json();
+          detail = body.error || "";
+        } catch (_) {}
+        throw new Error(detail || `Request failed (${res.status})`);
+      }
+
+      status.textContent = `Thanks ${name.split(" ")[0]}! We've got your enquiry and will reply within one business day.`;
+      status.classList.add("ok");
+      form.reset();
+    } catch (err) {
+      status.textContent =
+        "Sorry — that didn't send. Please email us directly at " +
+        FALLBACK_EMAIL +
+        " and we'll pick it up straight away.";
+      status.classList.add("err");
+      console.error("Quote submission failed:", err);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      }
+    }
   });
 }
 
