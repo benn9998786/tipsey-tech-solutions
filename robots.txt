@@ -1,0 +1,14 @@
+# robots.txt — Tipsey Tech Solutions
+# https://tipsey-tech-solutions.onrender.com
+
+User-agent: *
+Allow: /
+
+# Nothing sensitive or duplicate to hide, but be explicit for the major bots.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://tipsey-tech-solutions.onrender.com/sitemap.xml
