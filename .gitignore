@@ -5,6 +5,10 @@ tmp/
 # Freebuff app internals
 .freebuff/
 
+# Local working notes and scripts. render-service.json contains a Render API
+# key in plaintext, so this directory must never be committed.
+.work/
+
 # OS / editor
 .DS_Store
 Thumbs.db

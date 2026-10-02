@@ -1042,3 +1042,223 @@ summary:focus-visible {
 }
 .subnav a:hover { color: var(--brand); border-color: var(--brand); }
 @media (max-width: 760px) { .subnav { top: 72px; } }
+
+/* ============================================================
+   Motion & graphics
+   All of the below is decorative. Every rule is neutralised by the
+   prefers-reduced-motion block above, and the JS that drives it
+   checks the same preference before attaching anything.
+   ============================================================ */
+
+/* ---------- Aurora mesh backdrop ---------- */
+.aurora {
+  position: absolute;
+  inset: -15%;
+  pointer-events: none;
+  overflow: hidden;
+  /* Kept deliberately low: the hero already has radial gradients, and the
+     copy has to stay comfortably readable on top of the glow. */
+  opacity: 0.4;
+}
+.aurora span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform;
+}
+.aurora span:nth-child(1) {
+  width: 42%; aspect-ratio: 1; top: 4%; left: 4%;
+  background: rgba(126, 224, 66, 0.32);
+  animation: aurora-a 24s ease-in-out infinite;
+}
+.aurora span:nth-child(2) {
+  width: 38%; aspect-ratio: 1; top: 18%; right: 6%;
+  background: rgba(34, 197, 94, 0.26);
+  animation: aurora-b 29s ease-in-out infinite;
+}
+.aurora span:nth-child(3) {
+  width: 34%; aspect-ratio: 1; bottom: 2%; left: 32%;
+  background: rgba(124, 224, 62, 0.18);
+  animation: aurora-c 33s ease-in-out infinite;
+}
+@keyframes aurora-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(7%, -9%, 0) scale(1.22); }
+}
+@keyframes aurora-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.1); }
+  50%      { transform: translate3d(-9%, 7%, 0) scale(0.92); }
+}
+@keyframes aurora-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.95); }
+  50%      { transform: translate3d(6%, 6%, 0) scale(1.18); }
+}
+
+/* Content must sit above the aurora. */
+.hero-grid, .page-hero > .container { position: relative; z-index: 1; }
+
+/* ---------- Scroll-drawn timeline for the process steps ---------- */
+.steps {
+  position: relative;
+  --progress: 0;
+}
+/* Track */
+.steps::before {
+  content: "";
+  position: absolute;
+  top: 26px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--line);
+}
+/* Filled portion, driven by --progress from script.js */
+.steps::after {
+  content: "";
+  position: absolute;
+  top: 26px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  transform-origin: left center;
+  transform: scaleX(var(--progress));
+  box-shadow: 0 0 12px rgba(126, 224, 66, 0.55);
+}
+.step { position: relative; }
+.step-num {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Hide the connecting line on stacked/mobile layouts */
+@media (max-width: 860px) {
+  .steps::before, .steps::after { display: none; }
+}
+
+/* ---------- 3D pointer tilt ---------- */
+.tilt {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+             translate3d(0, 0, 0);
+  transition: transform 240ms cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 240ms ease;
+}
+/* Promote only while a card is actually being tilted. Leaving will-change on
+   permanently would keep a GPU layer alive for every card on the page. */
+.tilt.is-tilting { transition: box-shadow 240ms ease; will-change: transform; }
+.tilt:hover {
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(126, 224, 66, 0.32);
+}
+
+/* ---------- Card hover glow ---------- */
+.card { transition: border-color 260ms ease, transform 260ms ease, box-shadow 260ms ease; }
+@media (hover: hover) {
+  .card:hover {
+    border-color: rgba(126, 224, 66, 0.45);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* ---------- Inline icon line-draw ---------- */
+.draw svg path,
+.draw svg circle,
+.draw svg rect,
+.draw svg line,
+.draw svg polyline {
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  transition: stroke-dashoffset 900ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.draw.in svg path,
+.draw.in svg circle,
+.draw.in svg rect,
+.draw.in svg line,
+.draw.in svg polyline {
+  stroke-dashoffset: 0;
+}
+
+/* ---------- Button sheen ---------- */
+.btn { position: relative; overflow: hidden; }
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transform: skewX(-18deg);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .btn-primary:hover::after { animation: sheen 900ms ease-out; }
+}
+@keyframes sheen {
+  from { left: -120%; }
+  to   { left: 130%; }
+}
+
+/* ---------- Parallax on split media ---------- */
+.split-media {
+  overflow: hidden;
+  border-radius: var(--radius-lg, 16px);
+}
+.split-media img {
+  transform: translate3d(0, var(--py, 0px), 0) scale(1.06);
+  will-change: transform;
+}
+
+/* ---------- Form success animation ---------- */
+.form-sent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.tick {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+.tick circle,
+.tick path {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tick circle {
+  stroke-dasharray: 64;
+  stroke-dashoffset: 64;
+  animation: tick-ring 520ms ease-out forwards;
+}
+.tick path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: tick-mark 320ms 380ms ease-out forwards;
+}
+@keyframes tick-ring { to { stroke-dashoffset: 0; } }
+@keyframes tick-mark { to { stroke-dashoffset: 0; } }
+
+/* ---------- Eyebrow pulse ---------- */
+@keyframes eyebrow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(126, 224, 66, 0); }
+  50%      { box-shadow: 0 0 0 5px rgba(126, 224, 66, 0.07); }
+}
+.reveal.in .eyebrow { animation: eyebrow-pulse 3.2s ease-in-out 0.6s infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora { display: none; }
+  .steps::after { transform: scaleX(1); }
+  .tilt { transform: none !important; }
+  .draw svg path, .draw svg circle, .draw svg rect,
+  .draw svg line, .draw svg polyline { stroke-dashoffset: 0; }
+  .split-media img { transform: none; }
+}

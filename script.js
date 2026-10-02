@@ -135,8 +135,21 @@ if (form) {
         throw new Error(result.message || `Request failed (${res.status})`);
       }
 
-      status.textContent = `Thanks ${name.split(" ")[0]}! We've got your enquiry and will reply within one business day.`;
-      status.classList.add("ok");
+      // Draw the tick first so it animates as the confirmation appears.
+      status.className = "form-status form-sent ok";
+      status.textContent = "";
+      const tick = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      tick.setAttribute("class", "tick");
+      tick.setAttribute("viewBox", "0 0 24 24");
+      tick.setAttribute("aria-hidden", "true");
+      tick.innerHTML =
+        '<circle cx="12" cy="12" r="10"></circle><path d="M7 12.4l3.4 3.4L17.4 8.8"></path>';
+      status.appendChild(tick);
+      status.appendChild(
+        document.createTextNode(
+          `Thanks ${name.split(" ")[0]}! We've got your enquiry and will reply within one business day.`
+        )
+      );
       form.reset();
     } catch (err) {
       console.error("Quote submission failed:", err);
@@ -229,3 +242,126 @@ if ("IntersectionObserver" in window && counters.length) {
 // --- Footer year ---
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+// ============================================================
+// Motion & graphics
+// Everything below is decorative and additive. It is all guarded:
+// nothing attaches unless the visitor has not asked for reduced
+// motion, and every selector is optional so the file stays safe to
+// load on any page.
+// ============================================================
+(function () {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let motionOff = reduced.matches;
+  const onMotionChange = () => { motionOff = reduced.matches; };
+  if (reduced.addEventListener) reduced.addEventListener("change", onMotionChange);
+  else if (reduced.addListener) reduced.addListener(onMotionChange);
+
+  // Throttle to one call per frame, with a timeout backstop. Some environments
+  // (backgrounded tabs, embedded webviews) never paint a frame, and a plain rAF
+  // guard would then latch "busy" forever and freeze every scroll effect.
+  let frameQueued = false;
+  const frameOnce = (fn) => {
+    if (frameQueued) return;
+    frameQueued = true;
+    const run = () => { frameQueued = false; fn(); };
+    if (window.requestAnimationFrame) window.requestAnimationFrame(run);
+    setTimeout(run, 60);
+  };
+
+  // ---------- Scroll-drawn timeline for .steps ----------
+  const steps = document.querySelector(".steps");
+  if (steps) {
+    const paintProgress = () => {
+      const rect = steps.getBoundingClientRect();
+      const anchor = window.innerHeight * 0.68;
+      // 0 when the top of the block reaches the anchor, 1 when the bottom does.
+      const total = rect.height || 1;
+      const seen = (anchor - rect.top) / total;
+      const p = Math.min(1, Math.max(0, seen));
+      steps.style.setProperty("--progress", motionOff ? "1" : p.toFixed(3));
+    };
+    const onScroll = () => frameOnce(paintProgress);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    paintProgress();
+  }
+
+  // ---------- Pointer tilt on cards ----------
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
+  if (canHover.matches) {
+    document.querySelectorAll(".card, .price-card, .work-card").forEach((card) => {
+      card.classList.add("tilt");
+      if (motionOff) return;
+
+      card.addEventListener("pointerenter", () => card.classList.add("is-tilting"));
+      card.addEventListener("pointermove", (e) => {
+        if (motionOff) return;
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.setProperty("--ry", (px * 9).toFixed(2) + "deg");
+        card.style.setProperty("--rx", (-py * 7).toFixed(2) + "deg");
+      });
+      const reset = () => {
+        card.classList.remove("is-tilting");
+        card.style.setProperty("--ry", "0deg");
+        card.style.setProperty("--rx", "0deg");
+      };
+      card.addEventListener("pointerleave", reset);
+      card.addEventListener("blur", reset, true);
+    });
+  }
+
+  // ---------- Inline icon line-draw ----------
+  const drawTargets = document.querySelectorAll(".reveal .icon svg, .step svg");
+  if (drawTargets.length) {
+    const drawables = document.querySelectorAll(
+      ".reveal .icon svg, .step svg"
+    );
+    let shown = false;
+    const show = () => {
+      if (shown) return;
+      shown = true;
+      drawTargets.forEach((svg) => svg.parentElement.classList.add("draw", "in"));
+    };
+    if (motionOff || !("IntersectionObserver" in window)) {
+      show();
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((en) => en.isIntersecting)) {
+            show();
+            io.disconnect();
+          }
+        },
+        { threshold: 0.3 }
+      );
+      const first = document.querySelector(".reveal .icon svg, .step svg");
+      if (first) io.observe(first.parentElement);
+      // Safety net: if the observer never fires, show anyway.
+      setTimeout(show, 2500);
+    }
+  }
+
+  // ---------- Parallax on split media ----------
+  const media = document.querySelectorAll(".split-media img, .hero-art img");
+  if (media.length) {
+    const apply = () => {
+      const vh = window.innerHeight;
+      media.forEach((img) => {
+        const host = img.parentElement;
+        const r = host.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        // -0.5 .. 0.5 across the viewport, mapped to a gentle 22px range.
+        const offset = ((r.top + r.height / 2 - vh / 2) / vh) * -22;
+        img.style.setProperty("--py", (motionOff ? 0 : offset).toFixed(1) + "px");
+      });
+    };
+    window.addEventListener("scroll", () => frameOnce(apply), {
+      passive: true,
+    });
+    window.addEventListener("resize", apply);
+    apply();
+  }
+})();
