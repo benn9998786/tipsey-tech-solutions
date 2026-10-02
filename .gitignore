@@ -1,0 +1,12 @@
+# Local server log / temp
+*.log
+tmp/
+
+# Freebuff app internals
+.freebuff/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

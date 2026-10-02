@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050905" />
+  <title>Contact — Tipsey Tech Solutions</title>
+  <meta name="description" content="Get a free quote for your website. Tipsey Tech Solutions replies within one business day." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Contact — Tipsey Tech Solutions" />
+  <meta property="og:description" content="Get a free quote for your website. Tipsey Tech Solutions replies within one business day." />
+  <meta property="og:image" content="assets/promo-poster.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact — Tipsey Tech Solutions" />
+  <meta name="twitter:description" content="Get a free quote for your website. Tipsey Tech Solutions replies within one business day." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237ce03e'/%3E%3Ctext x='32' y='44' font-family='Arial' font-size='36' font-weight='bold' fill='white' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container nav">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">T</span>
+        <span class="brand-name">Tipsey <em>Tech</em></span>
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html" data-nav>Home</a>
+        <a href="services.html" data-nav>Services</a>
+        <a href="work.html" data-nav>Work</a>
+        <a href="about.html" data-nav>About</a>
+        <a href="contact.html" class="btn btn-small" data-nav>Get a quote</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <nav class="crumbs reveal"><a href="index.html">Home</a><span>/</span><span>Contact</span></nav>
+        <h1 class="reveal">Let's build something <span class="grad">worth clicking on.</span></h1>
+        <p class="lede reveal">Tell us a little about your project and we'll reply within one business day with next steps and a clear quote.</p>
+      </div>
+      <img class="page-hero-art" src="assets/hero-browser.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section section-alt">
+      <div class="container contact-grid">
+        <div class="contact-copy reveal">
+          <span class="eyebrow">Get in touch</span>
+          <h2>Tell us about your project.</h2>
+          <p>No hard sell, no obligation. Even if we're not the right fit, we'll point you in the right direction.</p>
+
+          <ul class="contact-list">
+            <li><span>✉️</span> hello@tipseytech.com</li>
+            <li><span>📞</span> +44 20 7946 0100</li>
+            <li><span>📍</span> Remote-first · London, UK</li>
+            <li><span>🕐</span> Mon–Fri, 9am–6pm GMT</li>
+          </ul>
+
+          <div class="cards" style="margin-top:32px;grid-template-columns:1fr;">
+            <article class="card">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#7ce03e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <h3>What happens next?</h3>
+              <p>We'll book a free 30-minute call, learn what you need, and send a fixed quote within 24 hours of the call.</p>
+            </article>
+          </div>
+        </div>
+
+        <form class="contact-form reveal" id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@company.com" required />
+          </div>
+          <div class="field">
+            <label for="budget">Budget</label>
+            <select id="budget" name="budget">
+              <option>£1k – £3k</option>
+              <option>£3k – £6k</option>
+              <option>£6k – £12k</option>
+              <option>£12k+</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Project details</label>
+            <textarea id="message" name="message" rows="4" placeholder="What do you need?" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Send enquiry</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Before you ask</span>
+          <h2>Good to know.</h2>
+        </div>
+        <div class="faq reveal">
+          <details open>
+            <summary>Is the discovery call really free?</summary>
+            <p>Yes — completely free, no obligation. It's a 30-minute conversation to see if we're a good fit for each other.</p>
+          </details>
+          <details>
+            <summary>How fast can you start?</summary>
+            <p>Most projects kick off within 1–2 weeks of signing. If you have a hard deadline, tell us in the form and we'll be honest about it.</p>
+          </details>
+          <details>
+            <summary>Do you take deposits?</summary>
+            <p>We ask for 50% to book your slot in the calendar, with the remaining 50% due at launch. No hidden extras.</p>
+          </details>
+          <details>
+            <summary>Can you redesign my existing site?</summary>
+            <p>Absolutely — roughly half our work is redesigns. We'll audit what you have, keep what's working, and rebuild the rest.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Prefer to just talk?</h2>
+          <p>Skip the form and call us directly. A real person answers, usually before the second ring.</p>
+          <a href="tel:+442079460100" class="btn btn-white">+44 20 7946 0100</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a href="index.html" class="brand">
+          <span class="brand-mark">T</span>
+          <span class="brand-name">Tipsey <em>Tech</em></span>
+        </a>
+        <p>Websites that win business. Designed, built, and looked after by people who care.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="services.html">Web design</a>
+        <a href="services.html#ecommerce">eCommerce</a>
+        <a href="services.html#seo">SEO</a>
+        <a href="services.html#care">Care plans</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="work.html">Our work</a>
+        <a href="about.html">About us</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <a href="mailto:hello@tipseytech.com">hello@tipseytech.com</a>
+        <a href="tel:+442079460100">+44 20 7946 0100</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> Tipsey Tech Solutions. All rights reserved.</span>
+      <span>Built with care ✦</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

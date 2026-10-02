@@ -1,0 +1,8 @@
+# Render Blueprint — Tipsey Tech Solutions static site
+# Connect this repo in the Render dashboard and this file auto-configures the service.
+services:
+  - type: static
+    name: tipsey-tech-solutions
+    runtime: static
+    staticPublishPath: .
+    autoDeploy: true
