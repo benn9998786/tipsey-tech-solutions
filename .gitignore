@@ -10,3 +10,5 @@ tmp/
 Thumbs.db
 .idea/
 .vscode/
+.gh_token
+.render_key

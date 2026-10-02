@@ -95,15 +95,17 @@ img { max-width: 100%; display: block; }
 }
 .brand { display: inline-flex; align-items: center; gap: 10px; }
 .brand-mark {
-  width: 34px; height: 34px;
-  display: grid; place-items: center;
-  background: linear-gradient(135deg, var(--brand), var(--brand-2));
-  color: var(--on-brand);
-  font-family: "Sora", sans-serif;
-  font-weight: 800;
-  border-radius: 10px;
+  height: 40px;
+  width: auto;
+  display: block;
+  object-fit: contain;
 }
-.brand-name { font-weight: 700; font-size: 1.12rem; }
+.brand-name {
+  font-weight: 800;
+  font-size: 1.18rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
 .brand-name em { font-style: normal; color: var(--brand); }
 
 .nav-links { display: flex; align-items: center; gap: 28px; }
@@ -494,7 +496,7 @@ img { max-width: 100%; display: block; }
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 .site-footer .brand-name { color: #fff; }
-.site-footer .brand-name em { color: var(--brand-2); }
+.site-footer .brand-name em { color: var(--brand); }
 .site-footer p { font-size: 0.93rem; margin-top: 16px; max-width: 30em; }
 .site-footer h4 { color: #fff; font-size: 0.95rem; margin-bottom: 16px; }
 .footer-grid a { display: block; font-size: 0.93rem; padding: 5px 0; color: #a9c4a5; transition: color 0.15s; }
